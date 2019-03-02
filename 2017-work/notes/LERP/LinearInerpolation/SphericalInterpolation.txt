@@ -1,0 +1,12 @@
+Circular interpolation
+SLERP
+
+Vector V0, V1 = length = 1
+
+(1-t)* V0 + t * V1      // Linear / length of linear
+--------------------    // Will give you a motion
+|(1-t)* V0 + t * V1|    // But not exactly linear
+
+ sin((1-t)Ω)       P0 + sin(Ω)        // Proper way to do it
+----------- V0 +   ----------- V1
+  sin(Ω)             sin(Ω)

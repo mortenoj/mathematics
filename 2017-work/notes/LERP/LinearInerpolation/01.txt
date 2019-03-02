@@ -1,0 +1,34 @@
+Linear interpolation (LERP)
+
+Moving a object t between 2 points.
+A straight line starts in point P0 and ends in P1.
+T=0 in P0 and T=1 in P1. T= 1/2 would be halfway along
+that line.
+
+(1-t)P0 + t * P1   // P0 is 0 first part disapears
+(1-t) + t = 1
+
+lerp(float);
+
+
+Easing LERP
+// Accelerate to a point and then ease down  to P1
+// wont crash into the point and bounce back,
+// it would slow down and change direction
+
+(cos(t))^2 * P0 + (sin(t))^2 * P1
+cos(t)^2 + sin(t)^2 = 1
+t = 0 ... t/2
+
+cos(1/2t)^2 * P0 + sin(1/2t)^2 * P1
+t = 0 ... 1
+
+HP-bar position (interpolation) // interpolation.cpp
+- colour (alfa)
+- rotation (SLERP)
+- angle
+- sounds
+- shape
+- size
+
+// complicatedInterpolation.cpp

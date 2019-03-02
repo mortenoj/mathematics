@@ -1,0 +1,21 @@
+Quadratic Bezier Curves
+
+P0, P1, P2, P3 = control points
+Interpolation between P0 and P1, but also from P1 to P2
+(1-t)*P1 + P1*t and (1-t)*P1 + t * P2
+
+(1-t)[P0 + 1*P1] + t[(1-t)P1 + t*P2]
+ = (1-t)^2 * P0 + 2t * (1-t)P1 + t^2 * P2
+
+Qubic Bezier Curves
+
+Interpolation between 2 quadratic interpolation
+(1-t)^3 * P0 + 3(1-t)^3 * tP1 + 3(1-t)*t^2 * P2 + t^3 * P3
+ // Pattern between the bezier curves is the Pascals triangle
+
+ More control point
+ If for example 6 control points, in stead of using
+ 1 big interpolation would be too complicated. Instead
+ use several lesser interpolations. 6 = 2 + 2 + 2 control points.
+
+ 

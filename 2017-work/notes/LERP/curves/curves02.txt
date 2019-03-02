@@ -1,0 +1,20 @@
+Parametric curves
+
+t - parameter
+
+P(t) = [x(t)]  // vector for x-coor and y-coor
+       [y(t)]
+
+Line
+
+P(t) = [a + c*t] // ab = point on the curve
+       [b + D*T] // [cd]t = direction on the curve
+
+P(t) = [a + c*t^2] // same as over
+       [b + d*t^2] // you will go faster and faster as t^2
+
+P(t) = [a] + [c]t + [0  ]t^2 // curve of a ball toss
+       [b]   [d]    [-10]     // -10 = gravity(9.81)
+
+P(t) = [a] + 20[cost] // Circle with center inn [a] radius = 1
+       [b]     [sint] // 20 = size              [b]

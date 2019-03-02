@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+
+  <script>
+    'use strict';
+
+    let canvas = document.createElement("canvas");
+    let c = canvas.getContext("2d");
+
+    let velocity = 10;
+
+    window.onload = function() {
+
+      canvas.width = 800;
+      canvas.height = 400;
+
+      document.body.appendChild(canvas);
+
+      c.fillStyle = 'black';
+      c.fillRect(0,0,canvas.width,canvas.height);
+
+      function Particle() {
+        this.x = 0;
+        this.y = canvas.height;
+
+        this.vx = velocity;
+        this.vy = -velocity;
+
+        this.gravity = .3;
+      }
+
+      Particle.prototype.draw = function() {
+
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += this.gravity;
+
+        canvas.onclick = function() {
+          let xPos = event.clientX;
+          let yPos = event.clientY;
+
+          let x = xPos;
+          let y = canvas.height - yPos;
+          let g = 0.3;
+
+          let v = velocity;
+
+
+          let angle = Math.atan(
+            (v * v) + Math.sqrt(
+              (v * v * v * v) - (g * (g * (x * x) + 2 * y * (v * v))) / (g * x)
+            )
+          )
+
+          this.vx += velocity * Math.cos(angle);
+          this.vy += velocity * Math.sin(angle);
+
+          console.log(x + " " + y + " " + g + " " + v);
+          console.log(angle);
+        }
+
+        c.fillStyle = 'white';
+        c.fillRect(this.x, this.y, 20, 20);
+      }
+
+    function drawParticle() {
+      let p = new Particle();
+
+      setInterval(function() {
+        c.fillStyle = 'black';
+        c.fillRect(0,0,canvas.width,canvas.height);
+
+        p.draw();
+      }, 30);
+    }
+
+    setInterval(drawParticle, 1000);
+
+    }
+
+
+
+
+
+
+  </script>
+
+</body>
+</html>

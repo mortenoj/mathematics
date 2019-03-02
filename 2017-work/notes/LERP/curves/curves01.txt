@@ -1,0 +1,37 @@
+Curves:
+
+Polynomials
+  Y = f(x)
+  Y = x^2 // U-shape
+  Y = x^3 // S-Shape
+
+Rational function (Polynomial / polynomial)
+  Y = 1/x // Two curves that never meet
+
+Trigonomical function
+  y = sin(x) // waves
+
+Bell curve // normal distribution
+  Y = e^-x^2  // Hill shape
+  Y =erf(x)
+
+Clamp function  // Capping the values to max and min
+  float clamp(float x) {  // min = 0, max = 1
+    if(x < min)
+      x = min
+    else if(x > max)
+      x = max
+    return x;
+  }
+  Mathematical
+  f(x) = {min, if x < min}
+         {max, if x > max}
+         {x, otherwise   }
+
+Smoothstep // same as clamp but smooth
+  min = 0; max = 1;
+  float smoothstep(x) {
+    x = clamp(x);
+    return x^2(3-2x); // 3rd degree polynomial that is capped
+  }
+  

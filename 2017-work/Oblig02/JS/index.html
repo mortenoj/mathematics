@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 512px;
+      height: 512px;
+    }
+    .block {
+      float: left;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container"></div>
+
+
+  <script>
+  'use strict';
+
+  const windowX = 512;
+  const windowY = 512;
+  const dotRad = 16.0;
+  const numDots = 512/32;
+
+  let colours = ['red', 'white', 'blue', 'green', 'cyan', 'magenta', 'yellow', 'black'];
+  let container = document.querySelector(".container");
+  let body = document.body;
+
+  let highlight;
+  function onClick(event) {
+    const div = event.target;
+
+    if(highlight) {
+      let color;
+      color = highlight.style.backgroundColor;
+      highlight.style.backgroundColor = div.style.backgroundColor;
+      div.style.backgroundColor = color;
+      highlight = false;
+    }else {
+      highlight = div;
+    }
+  }
+  function drawDots() {
+    for(let i = 0; i < numDots; ++i) {
+      let row = document.createElement('div');
+      row.className = 'row';
+      for(let j = 0; j < numDots; ++j) {
+        let div = document.createElement('div', i);
+        div.className = 'block';
+        div.style.backgroundColor = colours[Math.floor(Math.random() * 7)];;
+        div.style.height = 32 + 'px';
+        div.style.width = 32 + 'px';
+        div.addEventListener('click', onClick);
+        row.appendChild(div);
+      }
+      container.appendChild(row);
+    }
+  }
+
+  function findPattern() {
+    let blocks = Array.prototype.slice.call(document.querySelectorAll('.block'));
+    let pattern = {
+      'red': [],
+      'white': [],
+      'blue': [],
+      'green': [],
+      'cyan': [],
+      'magenta': [],
+      'yellow': [],
+      'black': [],
+    };
+    let regexPattern = [];
+    blocks.map((block) => {
+      for(let o in pattern) {
+        if(o == block.style.backgroundColor) {
+          pattern[o].push(1);
+        }else {
+          pattern[o].push(0);
+        }
+      }
+    });
+    console.log(pattern);
+  }
+
+  drawDots();
+  findPattern();
+
+
+
+
+  </script>
+</body>
+
+</html>
