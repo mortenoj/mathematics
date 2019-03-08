@@ -55,10 +55,10 @@ void problem2() {
         (52/52) * (48/52) * (44/52) * (40/52) * (36/52);
     */
 
-    float probability = (52.0f/52.0f) * (48.0f/52.0f) * (44.0f/52.0f) * (40.0f/52.0f) * (36.0f/52.0f);
+    float probability = (52.0f/52.0f) * (48.0f/51.0f) * (44.0f/50.0f) * (40.0f/49.0f) * (36.0f/48.0f);
 
     std::cout << std::fixed;
-    std::cout << std::setprecision(10);
+    std::cout << std::setprecision(3);
     std::cout << "\n-------------------------------Problem2----------------------------------------\n\n";
     std::cout << "The chance of drawing 5 different values on five draws of a deck is \n\n"
               << probability << "\n"
