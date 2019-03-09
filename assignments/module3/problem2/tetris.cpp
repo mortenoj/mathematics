@@ -18,14 +18,14 @@ float speedTimer = 0.0f;
 int score = 0;
 int combo = 1;
 
-void drawSfText(std::string txt, int posX, int posY, sf::RenderWindow &w) {
+void drawSfText(std::string txt, int posX, int posY, int fontSize, sf::RenderWindow &w) {
     // Load the font from a file
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
         std::cout << "error loading file\n";
     }
 
-    sf::Text text(txt, font, textFontSize);
+    sf::Text text(txt, font, fontSize);
     text.setPosition(posX, posY);
     
     w.draw(text);    
@@ -137,9 +137,11 @@ int main() {
         std::string cCombo = std::to_string(combo);
         std::string cSpeed = std::to_string(static_cast<int>(displaySpeed));
 
-        drawSfText("Speed: " + cSpeed + "%", windowWidth*0.7, windowHeight * 0.4, window);
-        drawSfText("Score: " + cScore, windowWidth*0.7, windowHeight * 0.5, window);
-        drawSfText("Combo: " + cCombo, windowWidth*0.7, windowHeight * 0.6, window);
+        
+        drawSfText("TETRIS GAME!", windowWidth*0.6, windowHeight * 0.2, 100, window);
+        drawSfText("Speed: " + cSpeed + "%", windowWidth*0.6, windowHeight * 0.4, textFontSize, window);
+        drawSfText("Score: " + cScore, windowWidth*0.6, windowHeight * 0.5, textFontSize, window);
+        drawSfText("Combo: " + cCombo, windowWidth*0.6, windowHeight * 0.6, textFontSize, window);
 
         window.display();
     }
