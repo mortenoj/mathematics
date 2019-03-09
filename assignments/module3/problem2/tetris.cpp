@@ -6,6 +6,10 @@
 
 using namespace std;
 
+int const boardHeight = 20;
+int const boardWidth = 12;
+sf::Color const frameColor = sf::Color::White;
+
 //
 // Tetris
 //
@@ -72,22 +76,41 @@ void Shape::init() {
 
 
 	// two hardcoded shapes - this should be changed by you
-    switch(rand() % 2) {
-
+    switch(rand() % 5) {
     case 0:
-        tiles[2][0] = sf::Color::Red;
-        tiles[2][1] = sf::Color::Red;
-        tiles[2][2] = sf::Color::Red;
-        tiles[2][3] = sf::Color::Red;
+        tiles[2][0] = sf::Color::Cyan;
+        tiles[2][1] = sf::Color::Cyan;
+        tiles[2][2] = sf::Color::Cyan;
+        tiles[2][3] = sf::Color::Cyan;
         break;
 
     case 1:
-        tiles[0][2] = sf::Color::Blue;
-        tiles[1][2] = sf::Color::Blue;
-        tiles[1][1] = sf::Color::Blue;
-        tiles[2][1] = sf::Color::Blue;
+        tiles[0][2] = sf::Color::Green;
+        tiles[1][2] = sf::Color::Green;
+        tiles[1][1] = sf::Color::Green;
+        tiles[2][1] = sf::Color::Green;
         break;
 
+    case 2:
+        tiles[0][2] = sf::Color::Yellow;
+        tiles[0][1] = sf::Color::Yellow;
+        tiles[1][1] = sf::Color::Yellow;
+        tiles[2][1] = sf::Color::Yellow;
+        break;
+
+    case 3:
+        tiles[0][2] = sf::Color::Blue;
+        tiles[0][3] = sf::Color::Blue;
+        tiles[1][3] = sf::Color::Blue;
+        tiles[2][3] = sf::Color::Blue;
+        break;
+        
+    case 4:
+        tiles[0][2] = sf::Color::Magenta;
+        tiles[0][3] = sf::Color::Magenta;
+        tiles[1][2] = sf::Color::Magenta;
+        tiles[1][3] = sf::Color::Magenta;
+        break;
     }
 
 }
@@ -117,47 +140,74 @@ void Shape::draw(sf::RenderWindow& w) {
 
 class Board {
 public:
-    sf::Color tiles[12][20];
+    sf::Color tiles[boardWidth][boardHeight];
 
     Board();
 
 	// add a shape to the board
-    void add(Shape& shape);   
+    void add(Shape& shape);
 
 	// check if a shape intersects with the board
     bool intersect(Shape& shape);
 
 	// remove full lines - should be implemented by you
-    void reduce();
+    void reduce(int row);
 
 	// render board
     void draw(sf::RenderWindow& w);
+
+    int hasFullLine();
+
+private:
+    bool rowIsFull(int j);
 };
 
+bool Board::rowIsFull(int j) {
+    bool ret = true;
+    for(int i = 0; i < boardWidth; i++) {
+        if (tiles[i][j] == sf::Color::Black) {
+            ret = false;
+        }
+    }
+    return ret;
+}
 
-void Board::reduce() {
-    
+int Board::hasFullLine() {
+    for(int j = 0; j < boardHeight - 1; j++) {
+        if (rowIsFull(j)) {
+            return j;
+        }
+    }
+    return -1;
+}
+
+void Board::reduce(int row) {
+    for(int i = boardWidth - 1; i > 0; i--){
+        for(int j = row; j > 1; j--){
+            if (tiles[i][j+1] == frameColor) continue;
+            tiles[i][j+1] = tiles[i][j];
+            tiles[i][j] = sf::Color::Black;
+        }
+    }
 }
 
 bool Board::intersect(Shape& shape) {
     bool intersect = false;
     for(int i = 0; i < 4; i++) {
         for(int j = 0; j < 4; j++) {
-            if(tiles[i+shape.pos.x][j+shape.pos.y] != sf::Color::Black &&
-               shape.tiles[i][j] != sf::Color::Black)
+            if(tiles[i+shape.pos.x][j+shape.pos.y] != sf::Color::Black && shape.tiles[i][j] != sf::Color::Black)
                intersect = true;
         }
     }
     return intersect;
 }
 
-void Board::draw(sf::RenderWindow& w)
-{
+void Board::draw(sf::RenderWindow& w) {
     sf::CircleShape s;
     s.setRadius(8);
     s.setOrigin(8,8);
-    for(int i = 0; i < 12; i++) {
-        for(int j = 0; j < 20; j++) {
+    for(int i = 0; i < boardWidth; i++) {
+        for(int j = 0; j < boardHeight; j++) {
             s.setFillColor(tiles[i][j]);
             s.setPosition(sf::Vector2f(16 * i + 100, 16*j + 100));
             w.draw(s);
@@ -165,25 +215,15 @@ void Board::draw(sf::RenderWindow& w)
     }
 }
 
-void Board::add(Shape& shape)
-{
+void Board::add(Shape& shape) {
     for(int i = 0; i < 4; i++) {
         for(int j = 0; j < 4; j++) {
-
             if(shape.tiles[i][j] != sf::Color::Black) {
                 tiles[i + shape.pos.x][j + shape.pos.y] = shape.tiles[i][j];
-
-                }
-
             }
-
         }
-
-
+    }
 }
-
-
-
 
 
 Board::Board() {
@@ -196,11 +236,11 @@ Board::Board() {
 
 	// boundary
     for(int i = 0; i < 12; i++) {
-        tiles[i][19] = sf::Color::Red;
+        tiles[i][19] = frameColor;
     }
     for(int i = 0; i < 19; i++) {
-        tiles[0][i] = sf::Color::Red;
-        tiles[11][i] = sf::Color::Red;
+        tiles[0][i] = frameColor;
+        tiles[11][i] = frameColor;
     }
 }
 
@@ -209,7 +249,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(512, 512), "Tetris");
 
     sf::Clock clock;
-    clock.restart();	
+    clock.restart();
 
     Shape shape;
 
@@ -265,13 +305,16 @@ int main() {
         if(board.intersect(shape)) {
             shape.pos.y -= 1;
             board.add(shape);
-            board.reduce();
             shape.init();
             if(board.intersect(shape)) {
                 cout << "GAME OVER" << endl;
             }
         }
 
+        if (board.hasFullLine() != -1) {
+            board.reduce(board.hasFullLine());
+        }
+        
         window.clear(sf::Color::Black);
 
         board.draw(window);
