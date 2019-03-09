@@ -173,19 +173,24 @@ bool Board::rowIsFull(int j) {
 }
 
 int Board::hasFullLine() {
-    for(int j = 0; j < boardHeight - 1; j++) {
-        if (rowIsFull(j)) {
-            return j;
+    for(int row = 0; row < boardHeight - 1; row++) {
+        if (rowIsFull(row)) {
+            return row;
         }
     }
     return -1;
 }
 
 void Board::reduce(int row) {
+    // Loop over all rows above the full row
+    // swap the rows above one row down
     for(int i = boardWidth - 1; i > 0; i--){
         for(int j = row; j > 1; j--){
+            // (Redundant) Don't move the frame
             if (tiles[i][j+1] == frameColor) continue;
+            // Push row one down
             tiles[i][j+1] = tiles[i][j];
+            // Color the full line black
             tiles[i][j] = sf::Color::Black;
         }
     }
