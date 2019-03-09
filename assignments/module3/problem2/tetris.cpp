@@ -12,6 +12,9 @@ int const windowWidth = 1600;
 int const textFontSize = 60;
 
 float speed = 1.0f;
+float displaySpeed = 100.0f;
+float speedTimer = 0.0f;
+
 int score = 0;
 int combo = 1;
 
@@ -86,9 +89,6 @@ int main() {
                 }
             }
         }
-
-        if (clock2.getElapsedTime().asMilliseconds() % 10000 == 0)
-            speed += 1;
             
 		float dt = clock.restart().asSeconds();
 		
@@ -120,6 +120,14 @@ int main() {
             board.reduce(board.hasFullLine());
         }
 
+        // increase speed of the game every x seconds
+        speedTimer += clock2.restart().asSeconds();
+        if (speedTimer > 50.0f) {
+            speedTimer = 0.0f;
+            speed += 1;
+            displaySpeed += 1.0f/speed*100;
+        }
+
         window.clear(sf::Color::Black);
 
         board.draw(window);
@@ -127,7 +135,7 @@ int main() {
 
         std::string cScore = std::to_string(score);
         std::string cCombo = std::to_string(combo);
-        std::string cSpeed = std::to_string((1 / speed) * 100);
+        std::string cSpeed = std::to_string(static_cast<int>(displaySpeed));
 
         drawSfText("Speed: " + cSpeed + "%", windowWidth*0.7, windowHeight * 0.4, window);
         drawSfText("Score: " + cScore, windowWidth*0.7, windowHeight * 0.5, window);

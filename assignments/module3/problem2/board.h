@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "shape.h"
 
-int const boardHeight = 20;
+int const boardHeight = 26;
 int const boardWidth = 12;
 sf::Color const frameColor = sf::Color::White;
 
@@ -102,19 +102,19 @@ void Board::add(Shape& shape) {
 
 Board::Board() {
 	// fill with black
-    for(int i = 0; i < 20; i++) {
-        for(int j = 0; j < 12; j++) {
+    for(int i = 0; i < boardHeight; i++) {
+        for(int j = 0; j < boardWidth; j++) {
             tiles[j][i] = sf::Color::Black;
         }
     }
 
 	// boundary
-    for(int i = 0; i < 12; i++) {
-        tiles[i][19] = frameColor;
+    for(int i = 0; i < boardWidth; i++) {
+        tiles[i][boardHeight-1] = frameColor;
     }
 
-    for(int i = 0; i < 19; i++) {
+    for(int i = 0; i < boardHeight-1; i++) {
         tiles[0][i] = frameColor;
-        tiles[11][i] = frameColor;
+        tiles[boardWidth-1][i] = frameColor;
     }
 }

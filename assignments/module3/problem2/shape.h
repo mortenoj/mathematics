@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
-int const dotRadius = 36;
+
+int const dotRadius = 26;
 
 class Shape {
 public:
