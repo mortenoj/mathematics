@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <random>
 
 int const dotRadius = 26;
 
@@ -92,9 +93,13 @@ void Shape::draw(sf::RenderWindow& w) {
     }
 }
 
-void Shape::shapeTiles() {
-    // two hardcoded shapes - this should be changed by you
-    switch(rand() % 7) {
+void Shape::shapeTiles() { 
+    // Uniform int distribution
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 7);
+
+    switch(dis(gen) % 7) {
     // [0, 0, x, 0]
     // [0, 0, x, 0]
     // [0, 0, x, 0]

@@ -1,4 +1,4 @@
-
+// g++ -std=c++17 -c tetris.cpp && g++ tetris.o -o tetris -lsfml-graphics -lsfml-window -lsfml-system && ./tetris
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <cstdlib>
