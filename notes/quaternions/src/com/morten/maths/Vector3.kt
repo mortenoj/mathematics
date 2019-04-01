@@ -107,6 +107,17 @@ class Vector3 {
         return this / this.length()
     }
 
+    fun applyMatrix4(v: Vector3, matrix: Matrix4): Vector3 {
+        val m: List<Float> = matrix.m.flatten()
+        val w = 1.0f
+        // val w = 1.0f / ( m[ 3 ] * v.x + m[ 7 ] * v.y + m[ 11 ] * v.z + m[ 15 ] )
+        val retVec = Vector3()
+        retVec.x = ((m[ 0 ] * v.x + m[ 4 ] * v.y + m[ 8 ] * v.z + m[ 12 ]) * w)
+        retVec.y = ((m[ 1 ] * v.x + m[ 5 ] * v.y + m[ 9 ] * v.z + m[ 13 ]) * w)
+        retVec.z = ((m[ 2 ] * v.x + m[ 6 ] * v.y + m[ 10 ] * v.z + m[ 14 ]) * w)
+        return retVec
+    }
+
     override fun toString(): String {
         return "($x, $y, $z)"
     }

@@ -43,22 +43,3 @@ class Quaternion {
 	    return (q * p * q.inverted()).v;
     }
 }
-
-// kotlinc src -include-runtime -d Quaternion.jar && java -jar Quaternion.jar
-fun main(args: Array<String>) {
-    val q1 = Quaternion(Vector3(0f, 1f, 0f), 90f)
-    val q2 = Quaternion(Vector3(1f, 0f, 0f), 45f)
-    val q3 = q2 * q1
-
-    println("q1: $q1 \n")
-    println("q2: $q2 \n")
-    println("q1 * q2 = q3: " + q3 + " \n")
-    
-    println("q3 * vector(1, 0, 0): ${ q3 * Vector3(1f, 0f, 0f) } \n")
-
-    println("q1 * vector(1, 0, 0): ${ q1 * Vector3(1f, 0f, 0f) } \n")
-    println("q2 * vector(0, 0, 1): ${ q2 * Vector3(0f, 0f, 1f) } \n")
-
-    val euler = EulerAngle(10f, 0f, 20f)
-    println("euler: ${euler.toVector()}")
-}
