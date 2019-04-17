@@ -14,8 +14,8 @@
     //     [1,1,1,1,1,1,1,1,1,1,1,1,1]
     // ]
     
-const cols = 50;
-const rows = 50;
+const cols = 100;
+const rows = 100;
 const grid = new Array(cols);
 
 let openSet = [];
@@ -26,7 +26,7 @@ let w, h;
 let path = [];
 
 const useDiagonals = true;
-const obstaclePercentage = 40;
+const obstaclePercentage = 30;
 
 function removeFromArray(array, elem) {
     for (let i = array.length - 1; i >= 0; i--) {
@@ -134,7 +134,7 @@ function setup() {
     }
 
     start = grid[0][0]
-    end = grid[cols-1][rows-1]
+    end = grid[int(random(cols-1))][int(random(rows/2, rows-1))]
 
     start.wall = false;
     end.wall = false;
@@ -157,7 +157,7 @@ function draw() {
         if (current === end) {
             noSolution = false;
             noLoop();
-            console.log("Done");
+            console.log("Found shortest path in " + path.length + " steps");
         }
 
         removeFromArray(openSet, current);
@@ -192,8 +192,8 @@ function draw() {
                 // Only calculate the heuristics if we actually have a new path
                 if (newPath) {
                     // Calculate the heuristic
-                    // neighbor.h = heuristic(neighbor, end);
-                    neighbor.h = manhattan(neighbor, end);
+                    neighbor.h = heuristic(neighbor, end);
+                    // neighbor.h = manhattan(neighbor, end);
                     // Cost estimate
                     neighbor.f = neighbor.g + neighbor.h;
                     // For tracing path
@@ -220,6 +220,9 @@ function draw() {
     openSet.map((spot) => {
         spot.show(color(0, 255, 0))
     })
+
+    end.show(color(255,105,180))
+    start.show(color(255,105,180))
 
 
     // find the path
