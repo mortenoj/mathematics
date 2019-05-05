@@ -14,8 +14,8 @@
     //     [1,1,1,1,1,1,1,1,1,1,1,1,1]
     // ]
     
-const cols = 100;
-const rows = 100;
+const cols = 200;
+const rows = 200;
 const grid = new Array(cols);
 
 let openSet = [];
